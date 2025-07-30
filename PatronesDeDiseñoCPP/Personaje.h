@@ -7,6 +7,7 @@ public:
 	~Personaje();
 	void Saltar();
 	void Disparar(); 
+	void Agacharse();
 
 	//Getters y Setters
 	float GetHealth();

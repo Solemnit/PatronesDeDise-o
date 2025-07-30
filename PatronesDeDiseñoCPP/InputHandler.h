@@ -10,5 +10,6 @@ public:
 private:
 	ICommand* botonW_;
 	ICommand* botonF_;
+	ICommand* botonE_;
 };
 

@@ -28,3 +28,13 @@ public:
     }
 };
 
+class AgacharseCommand : public ICommand
+{
+public:
+    virtual void execute(Personaje& personaje) override
+    {
+        personaje.Agacharse(); // Llama a la acción específica en el personaje
+    }
+};
+
+
