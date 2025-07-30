@@ -24,3 +24,36 @@ ICommand* InputHandler::handleInput(char tecla)
     // Si no es una tecla mapeada, no devolvemos ningún comando
     return nullptr;
 }
+
+void InputHandler::reconfigurarTecla(char tecla, std::string accion)
+{
+    ICommand* nuevoComando = nullptr;
+
+    //Se llama un comando al cual se quiere reconfigurar
+    if (accion == "saltar")
+        nuevoComando = &saltarCmd_;
+    else if (accion == "disparar")
+        nuevoComando = &dispararCmd_;
+    else if (accion == "agacharse")
+        nuevoComando = &agacharseCmd_;
+    else {
+        std::cout << "Acción inválida.\n";
+        return;
+    }
+    //se reconfigura la tecla del comando que se quiere reconfigurar
+    switch (tecla)
+    {
+    case 'w':
+        botonW_ = nuevoComando;
+        break;
+    case 'f':
+        botonF_ = nuevoComando;
+        break;
+    case 'e':
+        botonE_ = nuevoComando;
+        break;
+    default:
+        std::cout << "Tecla inválida.\n";
+        break;
+    }
+}

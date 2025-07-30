@@ -3,34 +3,59 @@
 
 #include <iostream>
 #include "Personaje.h"
+#include "InputHandler.h"
 
 int main()
 {
     char tecla;
     Personaje* personaje = new Personaje(20,20,10,10,10);
+    InputHandler inputHandler;
+    char tecla;
     
     std::cout << "================================\n";
     std::cout << "Bienvenido al Juego\n";
     std::cout << "Aprieta una tecla para jugar\n";
+    std::cout << "Controles: 'w' = Saltar, 'f' = Disparar,'e' = Agacharse\n"
+    std::cout << "Presiona la tecla 'r' para entrar al modo de reconfiguración de teclas\n"
+    std::cout << "Para salir de este modo presiona la tecla 'q'"
     std::cout << "================================\n";
 
     //Update
     while (true) 
     {
-        
         std::cin >> tecla;
-        if (tecla == 'w')
+
+        if (tecla == 'q') 
         {
-            personaje->Saltar();
+            break;
         }
-        else if (tecla == 'f')
+
+        if (tecla == 'r') 
         {
-            personaje->Disparar();
+            char teclaRemap;
+            std::string nuevaAccion;
+
+            std::cout << "¿Qué tecla quieres remapear? (w, f, e): ";
+            std::cin >> teclaRemap;
+
+            std::cout << "¿A qué acción? (saltar, disparar, agacharse): ";
+            std::cin >> nuevaAccion;
+
+            inputHandler.remapearTecla(teclaRemap, nuevaAccion);
+            std::cout << "Remapeo completado.\n";
+        }
+
+        // Pasamos la tecla al InputHandler para obtener un comando
+        ICommand* command = inputHandler.handleInput(tecla);
+
+        if (command != nullptr)
+        {
+            command->execute(*personaje); // El bucle principal no sabe qué acción se ejecuta, solo ejecuta el comando.
         }
         else
         {
             std::cout << "================================\n";
-            std::cout << "Esa tecla no es válida\n";
+            std::cout << "No hay comando asignado a esa tecla.\n";
             std::cout << "================================\n";
         }
         std::cout << std::endl;
@@ -39,6 +64,8 @@ int main()
         std::cout << "***********NextFrame***********\n";
         tecla = ' ';
     }
+    delete personaje;
+    return 0;
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar

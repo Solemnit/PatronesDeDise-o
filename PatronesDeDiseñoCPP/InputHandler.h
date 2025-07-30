@@ -13,3 +13,5 @@ private:
 	ICommand* botonE_;
 };
 
+void reconfigurarTecla(char tecla, std::string action)
+
